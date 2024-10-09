@@ -11,12 +11,12 @@ import android.widget.TextView;
 import java.text.BreakIterator;
 import java.text.DecimalFormat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     private static final char ADDITION = '+';
     private static final char SUBTRACTION = '-';
     private static final char MULTIPLICATION = '*';
     private static final char DIVISION = '/';
-    private static final char PERCENT = '%';
     private char currentSymbol;
     private double firstValue = Double.NaN;
     private double secondValue;
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        decimalFormat = new DecimalFormat("#.##########");
         txt1 = (TextView) findViewById(R.id.txt1);
         ans = (TextView) findViewById(R.id.ans);
         b1 = (Button) findViewById(R.id.b1);
@@ -148,6 +149,33 @@ public class MainActivity extends AppCompatActivity {
                 txt1.setText(null);
             }
         });
+        bs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allCalculations();
+                currentSymbol = SUBTRACTION;
+                ans.setText(decimalFormat.format(firstValue) + "-");
+                txt1.setText(null);
+            }
+        });
+        bm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allCalculations();
+                currentSymbol = MULTIPLICATION;
+                ans.setText(decimalFormat.format(firstValue) + "x");
+                txt1.setText(null);
+            }
+        });
+        bd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allCalculations();
+                currentSymbol = DIVISION;
+                ans.setText(decimalFormat.format(firstValue) + "/");
+                txt1.setText(null);
+            }
+        });
     }
 
         private void allCalculations(){
@@ -163,12 +191,15 @@ public class MainActivity extends AppCompatActivity {
                     firstValue = this.firstValue * secondValue;
                 else if (currentSymbol == DIVISION)
                     firstValue = this.firstValue / secondValue;
-                else if (currentSymbol == PERCENT)
-                    firstValue = this.firstValue % secondValue;
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     firstValue = Double.parseDouble(txt1.getText().toString());
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                 }
             }
         }
